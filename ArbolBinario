@@ -103,26 +103,6 @@ namespace Complejidad
 			}
 			
 		}
-		
-		public List<T> recorridoPorNiveles01(ArbolBinario<T>arbol, int longitud) {
-			Cola<ArbolBinario<T>> c= new Cola<ArbolBinario<T>>();
-			ArbolBinario<T> arbolAux;
-			List<T> a = new List<T>();
-			c.encolar(this);
-			while (c.esVacia == longitud) {
-				arbolAux= c.desencolar();
-				a.Add(dato);
-				Console.Write(arbolAux.dato +" ");
-				if(arbolAux.hijoIzquierdo != null){
-					c.encolar(arbolAux.hijoIzquierdo);
-				}
-				if (arbolAux.hijoDerecho != null){
-					c.encolar(arbolAux.hijoDerecho);
-				}}
-		return a;
-		}
-		
-	
 		public int contarHojas() {
 			return 0;
 		}
@@ -131,79 +111,33 @@ namespace Complejidad
 	
 
 
-		}}}
+		}
 		
 		
 		
 		
-//		public List<T> resolver(ArbolBinario<T> arbol ,int longitud){
-//			List<T> camino = new List<T>();
-//			int n=0;
-//			return resolver0(this,longitud, camino,n);
-//			}
-//			
-//		private List<T> resolver0 (ArbolBinario<T> arbol ,int longitud, List<T> camino,int i){
-//		
-////			Caso base, devuelva la lista cuando llega a la longitud 
-//			if (i == longitud){
-//			return camino;
-//			}
-////			Caso base, si itero mas veces que la longitud
-//			if (longitud < i){
-//				List<T> a = new List<T>();
-//				return a;
-//			}
-////			Caso recursivo, tiene que recorrer los niveles y llegar hasta que la longitud sea igual a la iteracion?
-//			else {
-//				
-//				
-//			}
+		public List<T> resolver(ArbolBinario<T> arbol ,int longitud){
+			List<T> camino = new List<T>();
+			int n=0;			
+			return resolver0(this,longitud, camino,n);
+			}
+			
+		private List<T> resolver0 (ArbolBinario<T> arbol ,int longitud, List<T> camino,int i){
+			if (camino.Count== longitud){
+				return camino;
+			}
+			else {	
+				camino.Add(dato);
+			if(hijoIzquierdo != null){
+				return resolver0(arbol.hijoIzquierdo,longitud,camino,i=i+1);
+				}
+			if (hijoDerecho != null){
+				return resolver0(arbol.hijoDerecho,longitud,camino,i=i+1);
+				}
+				
+			}}}
 	
 			
-//			if (camino.Count== longitud){
-//				return camino;
-//			}
-//			else {	
-//				camino.Add(dato);
-//			if(hijoIzquierdo != null){
-//				return resolver0(arbol.hijoIzquierdo,longitud,camino,i=i+1);
-//				}
-//			if (hijoDerecho != null){
-//				return resolver0(arbol.hijoDerecho,longitud,camino,i=i+1);
-//				}
-//				
-//	}
+
 	
 		
-//		CHAT GPT
-		
-//	public List<T> resolver(ArbolBinario<T> root, int targetLength)
-//    {
-//        List<T> currentPath = new List<T>();
-//        List<T> resultPath = new List<T>();
-//
-//        FindPathHelper(root, targetLength, currentPath, resultPath);
-//
-//        return resultPath;
-//    }
-//
-//    private void FindPathHelper(ArbolBinario<T> node, int targetLength, List<T> currentPath, List<T> resultPath)
-//    {
-//        if (node == null)
-//            return;
-//
-//        currentPath.Add(node.dato);
-//
-//        if (node.hijoIzquierdo == null && node.hijoDerecho == null && currentPath.Count == targetLength)
-//        {
-//            resultPath.AddRange(currentPath);
-//            return;
-//        }
-//
-//        FindPathHelper(node.hijoIzquierdo, targetLength, currentPath, resultPath);
-//        FindPathHelper(node.hijoDerecho, targetLength, currentPath, resultPath);
-//
-//        currentPath.RemoveAt(currentPath.Count - 1);
-//    }
-//    CIERRE DE CHATGPT
-    
