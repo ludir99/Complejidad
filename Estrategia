@@ -1,4 +1,3 @@
-
 using System;
 using System.Collections.Generic;
 namespace DeepSpace
@@ -10,15 +9,13 @@ namespace DeepSpace
 		
 		public String Consulta1( ArbolGeneral<Planeta> arbol)
 		{
-			
-			return EsBot(arbol).getDatoRaiz().Poblacion().ToString();
-			return "Esta a " + BuscarbotRecusivo(arbol).ToString() + " Planetas de la raiz" ;
+			return "+El Bot esta a " + HastaElBotHay(arbol).ToString() + " Planetas de la raiz" ;
 		}
 
 
 		public String Consulta2( ArbolGeneral<Planeta> arbol)
 		{
-			return "Los planetas detras del bot son: "+ PlanetasDetras(EsBot(arbol));;
+			return "+Los planetas detras del bot son: "+ PlanetasDetras(EsBot(arbol));
 		}
 
 
@@ -35,12 +32,11 @@ namespace DeepSpace
 			string nivel3=Porcentaje3.ToString();
 			string nivel4=Porcentaje4.ToString();
 			
-		return "Total: "+totalArbol +"Porcentaje(n1): "+nivel1+"% "+"Porcentaje(n2): "+nivel2+"% "+"Porcentaje(n3): "+nivel3+" % "+"Porcentaje(n4): "+nivel4+"%" ;
+		return "+Total: "+totalArbol +"\n-Porcentaje(n1): "+nivel1+"% "+"\n-Porcentaje(n2): "+nivel2+"% "+"\n-Porcentaje(n3): "+nivel3+" % "+"\n-Porcentaje(n4): "+nivel4+"%" ;
 		}
 		
 	public Movimiento CalcularMovimiento(ArbolGeneral<Planeta> arbol)
 		{ 	
-			
 			Planeta bot = EsBot(arbol).getDatoRaiz();
 			Planeta raizBot= BuscaRaizBot(arbol).getDatoRaiz();
 			Planeta jugador= EsJugador(arbol).getDatoRaiz();
@@ -48,97 +44,27 @@ namespace DeepSpace
 			
 			
 			if(raizBot == jugador){
-						Movimiento ataqueJugador=new Movimiento(bot,raizBot);
-					return ataqueJugador;}
-			if (raizBot == raizJugador && raizBot.EsPlanetaDeLaIA() != true){
 				Movimiento ataqueJugador=new Movimiento(bot,raizBot);
-				return ataqueJugador;
-			}
+					return ataqueJugador;}
+			
 			else{
 				foreach(var hijo in EsBot(arbol).getHijos()){
-					if( hijo.getDatoRaiz() == jugador){
+					
+					if( hijo.getDatoRaiz()== jugador){
 						Movimiento ataqueJugador=new Movimiento(bot,hijo.getDatoRaiz());
-					return ataqueJugador;}
-					if (hijo.getDatoRaiz() == raizJugador && hijo.getDatoRaiz().EsPlanetaDeLaIA() !=true){
-				Movimiento ataqueJugador=new Movimiento(bot,hijo.getDatoRaiz());
-				return ataqueJugador;}
-				
-				else{
-						foreach(var hijo1 in hijo.getHijos()){
-						if( hijo1.getDatoRaiz() == jugador){
-						Movimiento ataqueJugador=new Movimiento(bot,hijo1.getDatoRaiz());
 							return ataqueJugador;}
-							if (hijo1.getDatoRaiz() == raizJugador && hijo1.getDatoRaiz().EsPlanetaDeLaIA() !=true){
-							Movimiento ataqueJugador=new Movimiento(bot,hijo1.getDatoRaiz());
+					
+					if (hijo.getDatoRaiz() == raizJugador){
+						Movimiento ataqueJugador=new Movimiento(bot,hijo.getDatoRaiz());
 							return ataqueJugador;}
-						
-							else{
-								foreach(var hijo2 in hijo1.getHijos()){
-									if( hijo2.getDatoRaiz() == jugador){
-									Movimiento ataqueJugador=new Movimiento(bot,hijo2.getDatoRaiz());
-										return ataqueJugador;}
-									if (hijo2.getDatoRaiz() == raizJugador && hijo2.getDatoRaiz().EsPlanetaDeLaIA() !=true){
-										Movimiento ataqueJugador=new Movimiento(bot,hijo2.getDatoRaiz());
-										return ataqueJugador;}
-									else{
-										foreach(var hijo3 in hijo2.getHijos()){
-											if( hijo3.getDatoRaiz() == jugador){
-												Movimiento ataqueJugador=new Movimiento(bot,hijo3.getDatoRaiz());
-													return ataqueJugador;}
-											if (hijo3.getDatoRaiz() == raizJugador && hijo3.getDatoRaiz().EsPlanetaDeLaIA() !=true){
-												Movimiento ataqueJugador=new Movimiento(bot,hijo3.getDatoRaiz());
-												return ataqueJugador;}
-						}
-				
-				
 				}
-									
-									
-						}
+				if(arbol.getDatoRaiz().EsPlanetaDeLaIA() == false){
+						Movimiento ataqueNulo=new Movimiento(bot,raizBot);
+						return ataqueNulo;}
 				
-				
-				}
-						}
-				
-				
-				}
-				
-				
-				
-				
-				}
-			
-			
-			
-			}
-			
-			Movimiento ataqueFalso= new Movimiento(bot,raizBot);
-			return ataqueFalso;}
+				return null;}}
 	
-	public ArbolGeneral<Planeta> BuscaBots(ArbolGeneral<Planeta> arbol){
-		
-			Planeta a= arbol.getDatoRaiz();
-			if (a.EsPlanetaDeLaIA() == true){return arbol;}
-			else {
-				foreach(var hijo in arbol.getHijos()){
-					a=hijo.getDatoRaiz();
-					if (a.EsPlanetaDeLaIA() == true){return hijo;}
-					else{
-						foreach(var hijo1 in hijo.getHijos()){
-							a=hijo1.getDatoRaiz();
-							if (a.EsPlanetaDeLaIA() == true){return hijo1;}
-							else{
-								foreach(var hijo2 in hijo1.getHijos()){
-									a=hijo2.getDatoRaiz();
-									if (a.EsPlanetaDeLaIA() == true){return hijo2;}
-								}
-						}
-					}
-				}
-			}
-			return arbol;
-			}}
-	
+
 	public int PlanetasDetras(ArbolGeneral<Planeta> arbol){
 		Cola<Planeta> lista=new Cola<Planeta>();
 		foreach(var hijo in arbol.getHijos()){
@@ -152,54 +78,24 @@ namespace DeepSpace
 		return lista.Contar();
 	}
 	
-	public ArbolGeneral<Planeta> BuscaRaizBot(ArbolGeneral<Planeta> arbol){
-			foreach(var hijo in arbol.getHijos()){
-				if (hijo == EsBot(hijo)){return arbol;}
-				else{
-					foreach(var hijo1 in hijo.getHijos())
-						if(hijo1== EsBot(hijo1)){return hijo;}
-					else{
-						foreach(var hijo2 in hijo1.getHijos()){
-							if(hijo2 ==EsBot(hijo2)){return hijo1;}
-						
-						}	
-					}
-				}
-			}
-		
-	return arbol;
-	}
 	
-	
-	
-	
-	
-	
-	
-	
-	public int BuscarbotRecusivo(ArbolGeneral<Planeta> arbol){
+	public int HastaElBotHay(ArbolGeneral<Planeta> arbol){
 			
-			Planeta a= arbol.getDatoRaiz();
-			
-			if (a.EsPlanetaDeLaIA()== true){return 0 ;} // Esta en la Raiz
+			if (arbol.getDatoRaiz().EsPlanetaDeLaIA()== true){return 0 ;} // Esta en la Raiz
 			
 			else{
 			
 				foreach(var hijo in arbol.getHijos()){
-					
-					a=hijo.getDatoRaiz();
-					if (a.EsPlanetaDeLaIA()== true){return 1;}
+					if (hijo.getDatoRaiz().EsPlanetaDeLaIA()){return 1;}
 					else {
 						foreach(var hijos1 in hijo.getHijos()){
-							a=hijos1.getDatoRaiz();
-							if(a.EsPlanetaDeLaIA()==true){return 2;}
+							if(hijos1.getDatoRaiz().EsPlanetaDeLaIA()){return 2;}
 							foreach(var hijos2 in hijos1.getHijos()){
-								a=hijos2.getDatoRaiz();
-								if(a.EsPlanetaDeLaIA()==true){return 3;}
+								if(hijos2.getDatoRaiz().EsPlanetaDeLaIA()){return 3;}
 								}
 						}
 					}
-			}
+				}
 			}
 			return 0;
 		}
@@ -208,13 +104,14 @@ namespace DeepSpace
 
 
 	public ArbolGeneral<Planeta> EsBot(ArbolGeneral<Planeta>arbol){
-		Planeta PlanetDondeEstoy= arbol.getDatoRaiz();
-		if (PlanetDondeEstoy.EsPlanetaDeLaIA()==true){
+		
+		if (arbol.getDatoRaiz().EsPlanetaDeLaIA()){
 		return arbol;
 		}
 		if(arbol.esHoja()==true){
 		return null;
 		}
+		
 		else{
 			foreach(var hijo in arbol.getHijos()){
 			ArbolGeneral<Planeta> resultado = EsBot(hijo);
@@ -226,8 +123,7 @@ namespace DeepSpace
 	}
 
 	public ArbolGeneral<Planeta> EsJugador(ArbolGeneral<Planeta>arbol){
-		Planeta PlanetDondeEstoy= arbol.getDatoRaiz();
-		if (PlanetDondeEstoy.EsPlanetaDelJugador()==true){
+		if (arbol.getDatoRaiz().EsPlanetaDelJugador()){
 		return arbol;
 		}
 		if(arbol.esHoja()==true){
@@ -238,25 +134,23 @@ namespace DeepSpace
 			ArbolGeneral<Planeta> resultado = EsJugador(hijo);
 			if (resultado!= null){
 			return resultado;
+				}
 			}
-		}}
+		}
 		return null;
 	}
+
 	
 	
-	
-	
-	
-	
-	public ArbolGeneral<Planeta> BuscaRaizJugador(ArbolGeneral<Planeta> arbol){
+	public ArbolGeneral<Planeta> BuscaRaizBot(ArbolGeneral<Planeta> arbol){
 			foreach(var hijo in arbol.getHijos()){
-				if (hijo == EsJugador(hijo)){return arbol;}
+				if (hijo == EsBot(hijo)){return arbol;}
 				else{
 					foreach(var hijo1 in hijo.getHijos())
-						if(hijo1== EsJugador(hijo1)){return hijo;}
-					else{
-						foreach(var hijo2 in hijo1.getHijos()){
-							if(hijo2 ==EsJugador(hijo2)){return hijo1;}
+						if(hijo1== EsBot(hijo1)){return hijo;}
+						else{
+							foreach(var hijo2 in hijo1.getHijos()){
+								if(hijo2 ==EsBot(hijo2)){return hijo1;}
 						
 						}	
 					}
@@ -266,10 +160,22 @@ namespace DeepSpace
 	return arbol;
 	}
 	
-	
-	
-	
-	
+	public ArbolGeneral<Planeta> BuscaRaizJugador(ArbolGeneral<Planeta> arbol){
+			foreach(var hijo in arbol.getHijos()){
+			if (hijo.getDatoRaiz().EsPlanetaDelJugador()){return arbol;}
+				else{
+					foreach(var hijo1 in hijo.getHijos())
+						if(hijo.getDatoRaiz().EsPlanetaDelJugador()){return hijo;}
+					else{
+						foreach(var hijo2 in hijo1.getHijos()){
+							if(hijo.getDatoRaiz().EsPlanetaDelJugador()){return hijo1;}
+						
+						}	
+					}
+				}
+			}
+	return arbol;
+	}
 	
 	
 	public int TotaldePlanetasNivel2(ArbolGeneral<Planeta>Arbol){
